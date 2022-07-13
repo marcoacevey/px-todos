@@ -1,0 +1,39 @@
+query hello {
+  hello
+}
+
+query listTodos {
+  todos {
+    todoId
+    done
+    todoDesc
+  }
+}
+
+query listTodo($todoId: Int!) {
+  todo(todoId: $todoId) {
+    todoId
+    done
+    todoDesc
+  }
+}
+
+mutation createTodo($createTodoInput: CreateTodoInputDto!) {
+  createTodo(createTodoInput: $createTodoInput) {
+    todoId
+    done
+    todoDesc
+  }
+}
+
+mutation updateTodo($todoId: Float!, $updateTodoInput: UpdateTodoInputDto!) {
+  updateTodo(todoId: $todoId, updateTodoInput: $updateTodoInput) {
+    todoId
+    done
+    todoDesc
+  }
+}
+
+mutation deleteTodo($todoId: Int!) {
+  deleteTodo(todoId: $todoId)
+}

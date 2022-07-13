@@ -1,0 +1,71 @@
+version: "3.3"
+
+services:
+  px-todos-app-dev:
+    container_name: px-todos-app-dev
+    build:
+      context: ./px-todos-app/
+      target: development
+      dockerfile: ./Dockerfile
+    command: npm start
+    ports:
+      - 8100:8100
+    networks:
+      - px-todos-api-network-dev
+    volumes:
+      - ./px-todos-app/:/usr/src/app/app-ui
+      - /usr/src/app/app-ui/node_modules
+    restart: unless-stopped
+    depends_on:
+      - px-todos-api-dev
+  px-todos-api-dev:
+    container_name: px-todos-api-dev
+    build:
+      context: ./px-todos-api/
+      target: development
+      dockerfile: ./Dockerfile
+    command: npm run start:dev
+    ports:
+      - 3009:3008
+    networks:
+      - px-todos-api-network-dev
+    volumes:
+      - ./px-todos-api:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+    depends_on:
+      - px-todos-api-dev-mariadb
+  px-todos-api-dev-mariadb:
+    container_name: "px-todos-api-dev-mariadb"
+    image: mariadb:10.5
+    restart: always
+    # be sure to run `docker volume rm dev_dev_conf` when changing envs
+    environment:
+      - MARIADB_ROOT_PASSWORD=123456
+      - MARIADB_DATABASE=pxtodos_db_dev
+      - MARIADB_USER=dev
+      - MARIADB_PASSWORD=123456
+    networks:
+      px-todos-api-network-dev:
+        ipv4_address: "192.169.1.10"
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql:cached
+      - db_conf:/etc/mysql
+  px-todos-api-dev-adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    networks:
+      - px-todos-api-network-dev
+
+networks:
+  px-todos-api-network-dev:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.169.1.0/24
+volumes:
+  db_data:
+  db_conf:

@@ -1,0 +1,32 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type TodoDto {
+  todoId: Float!
+  done: Boolean!
+  todoDesc: String!
+}
+
+type Query {
+  hello: String!
+  todos: [TodoDto!]!
+  todo(todoId: Int!): TodoDto!
+}
+
+type Mutation {
+  createTodo(createTodoInput: CreateTodoInputDto!): TodoDto!
+  updateTodo(todoId: Float!, updateTodoInput: UpdateTodoInputDto!): TodoDto!
+  deleteTodo(todoId: Int!): Boolean!
+}
+
+input CreateTodoInputDto {
+  done: Boolean!
+  todoDesc: String!
+}
+
+input UpdateTodoInputDto {
+  todoId: Float!
+  done: Boolean!
+  todoDesc: String!
+}

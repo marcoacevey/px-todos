@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>PX's DEVs ToDo List</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="presentInsertTodoAlert()">
+        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngIf="todos">
+    <ion-item-sliding *ngFor="let todo of todos">
+      <ion-item>
+        <ion-icon *ngIf="todo.done" name="checkmark-done-circle-outline" slot="start"></ion-icon>
+        <ion-icon *ngIf="!todo.done" name="timer-outline" slot="start"></ion-icon>
+        <ion-label class="ion-text-wrap">{{todo.todoDesc}}</ion-label>
+      </ion-item>
+      <ion-item-options *ngIf="!todo.done" side="end">
+        <ion-item-option color="success" (click)="checkAsDoneTodo(todo)">Feito</ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="start">
+        <ion-item-option color="danger" (click)="excludeTodo(todo.todoId)">Excluir</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

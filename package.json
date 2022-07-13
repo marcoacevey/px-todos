@@ -1,0 +1,13 @@
+{
+  "name": "px-todos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "docker-compose up",
+    "app:codegen": "docker-compose exec px-todos-app-dev npm run codegen"
+  },
+  "author": "",
+  "license": "ISC"
+}
