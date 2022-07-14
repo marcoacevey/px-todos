@@ -2,6 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type BurguerDto {
+  topSliceBun: String!
+  letucce: String!
+  tomato: String!
+  patty: String!
+  cheese: String!
+  bottonSliceBun: String!
+}
+
 type TodoDto {
   todoId: Float!
   done: Boolean!
@@ -10,6 +19,7 @@ type TodoDto {
 
 type Query {
   hello: String!
+  burguer: BurguerDto!
   todos: [TodoDto!]!
   todo(todoId: Int!): TodoDto!
 }
